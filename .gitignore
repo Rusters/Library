@@ -1,0 +1,4 @@
+/packages
+Interface/obj/*
+Interface/bin/*
+/.vs

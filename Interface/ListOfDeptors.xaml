@@ -1,0 +1,24 @@
+﻿<Window x:Class="Interface.ListOfDeptors"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Interface"
+        
+        mc:Ignorable="d"
+        
+        Title="Список должников" Height="442" Width="516"
+        WindowStartupLocation="CenterScreen">
+    <Grid Background="#FFBFECD1">
+        <DataGrid x:Name="dgDeptors" AutoGenerateColumns="False" ItemsSource="{DynamicResource ResourceKey=deptorsList}" HorizontalAlignment="Left" Height="317" Margin="10,41,0,0" VerticalAlignment="Top" Width="477" IsReadOnly="True" MaxColumnWidth="159">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ФИО Должника" Binding="{Binding Path=fio}" Width="*" />
+                <DataGridTextColumn Header="Книга" Binding="{Binding Path=get_books}" Width="*" />
+                <DataGridTextColumn Header="Дней задолженности" Binding="{Binding Path=debt}" Width="130" />
+                <DataGridTextColumn Header="Номер телефона" Binding="{Binding Path=pho}" Width="*" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <Button Content="Вернуться" HorizontalAlignment="Left" Margin="10,363,0,0" VerticalAlignment="Top" Width="118" Height="30" Click="Button_Click"/>
+        <TextBox x:Name="tbSearchDebtor" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="tbSearchDebtor_TextChanged"/>
+    </Grid>
+</Window>

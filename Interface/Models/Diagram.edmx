@@ -1,0 +1,331 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Diagram.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="DiagramStoreContainer">
+    <EntitySet Name="Authors" EntityType="Diagram.Store.Authors" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="BookExtras" EntityType="Diagram.Store.BookExtras" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Books" EntityType="Diagram.Store.Books" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Readers" EntityType="Diagram.Store.Readers" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ArticulBooks" EntityType="Diagram.Store.ArticulBooks" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_AuthorsBooks" Association="Diagram.Store.FK_AuthorsBooks">
+      <End Role="Authors" EntitySet="Authors" />
+      <End Role="Books" EntitySet="Books" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BookExtrasReaders" Association="Diagram.Store.FK_BookExtrasReaders">
+      <End Role="Readers" EntitySet="Readers" />
+      <End Role="BookExtras" EntitySet="BookExtras" />
+    </AssociationSet>
+    <AssociationSet Name="BooksArticulBooks" Association="Diagram.Store.BooksArticulBooks">
+      <End Role="Books" EntitySet="Books" />
+      <End Role="ArticulBooks" EntitySet="ArticulBooks" />
+    </AssociationSet>
+    <AssociationSet Name="BookExtrasArticulBooks" Association="Diagram.Store.BookExtrasArticulBooks">
+      <End Role="BookExtras" EntitySet="BookExtras" />
+      <End Role="ArticulBooks" EntitySet="ArticulBooks" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Authors">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="fio" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="year_of_life" Type="nvarchar" Nullable="false" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="BookExtras">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="date_out" Type="datetime" Nullable="false" />
+    <Property Name="date_get" Type="datetime" Nullable="false" />
+    <Property Name="cost" Type="int" Nullable="false" />
+    <Property Name="Readers_id" Type="int" Nullable="false" />
+    <Property Name="ArticulBooks_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Books">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="date_public" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="cost" Type="int" Nullable="false" />
+    <Property Name="Authors_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Readers">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="fio" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="adress" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="phone" Type="nvarchar" Nullable="false" MaxLength="50" />
+    <Property Name="kolvo_books" Type="int" Nullable="false" />
+    <Property Name="date_reg" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ArticulBooks">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="articul" Type="int" Nullable="false" />
+    <Property Name="Books_id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_AuthorsBooks">
+    <End Role="Authors" Type="Diagram.Store.Authors" Multiplicity="1" />
+    <End Role="Books" Type="Diagram.Store.Books" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Authors">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="Books">
+        <PropertyRef Name="Authors_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BookExtrasReaders">
+    <End Role="Readers" Type="Diagram.Store.Readers" Multiplicity="1" />
+    <End Role="BookExtras" Type="Diagram.Store.BookExtras" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Readers">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="BookExtras">
+        <PropertyRef Name="Readers_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="BooksArticulBooks">
+    <End Role="Books" Type="Diagram.Store.Books" Multiplicity="1" />
+    <End Role="ArticulBooks" Type="Diagram.Store.ArticulBooks" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Books">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="ArticulBooks">
+        <PropertyRef Name="Books_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="BookExtrasArticulBooks">
+    <End Role="BookExtras" Type="Diagram.Store.BookExtras" Multiplicity="*" />
+    <End Role="ArticulBooks" Type="Diagram.Store.ArticulBooks" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="ArticulBooks">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="BookExtras">
+        <PropertyRef Name="ArticulBooks_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Diagram" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="DiagramContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Authors" EntityType="Diagram.Authors" />
+          <EntitySet Name="BookExtras" EntityType="Diagram.BookExtras" />
+          <EntitySet Name="Books" EntityType="Diagram.Books" />
+          <EntitySet Name="Readers" EntityType="Diagram.Readers" />
+          <EntitySet Name="ArticulBooks" EntityType="Diagram.ArticulBooks" />
+          <AssociationSet Name="FK_AuthorsBooks" Association="Diagram.FK_AuthorsBooks">
+            <End Role="Authors" EntitySet="Authors" />
+            <End Role="Books" EntitySet="Books" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BookExtrasReaders" Association="Diagram.FK_BookExtrasReaders">
+            <End Role="Readers" EntitySet="Readers" />
+            <End Role="BookExtras" EntitySet="BookExtras" />
+          </AssociationSet>
+          <AssociationSet Name="BooksArticulBooks" Association="Diagram.BooksArticulBooks">
+            <End Role="Books" EntitySet="Books" />
+            <End Role="ArticulBooks" EntitySet="ArticulBooks" />
+          </AssociationSet>
+          <AssociationSet Name="BookExtrasArticulBooks" Association="Diagram.BookExtrasArticulBooks">
+            <End Role="BookExtras" EntitySet="BookExtras" />
+            <End Role="ArticulBooks" EntitySet="ArticulBooks" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Authors">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fio" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="year_of_life" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Books" Relationship="Diagram.FK_AuthorsBooks" FromRole="Authors" ToRole="Books" />
+        </EntityType>
+        <EntityType Name="BookExtras">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="date_out" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="date_get" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="cost" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Readers" Relationship="Diagram.FK_BookExtrasReaders" FromRole="BookExtras" ToRole="Readers" />
+          <NavigationProperty Name="ArticulBooks" Relationship="Diagram.BookExtrasArticulBooks" FromRole="BookExtras" ToRole="ArticulBooks" />
+        </EntityType>
+        <EntityType Name="Books">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="date_public" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="cost" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Authors" Relationship="Diagram.FK_AuthorsBooks" FromRole="Books" ToRole="Authors" />
+          <NavigationProperty Name="ArticulBooks" Relationship="Diagram.BooksArticulBooks" FromRole="Books" ToRole="ArticulBooks" />
+        </EntityType>
+        <EntityType Name="Readers">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fio" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="adress" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="kolvo_books" Type="Int32" Nullable="false" />
+          <Property Name="date_reg" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="BookExtras" Relationship="Diagram.FK_BookExtrasReaders" FromRole="Readers" ToRole="BookExtras" />
+        </EntityType>
+        <EntityType Name="ArticulBooks">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="articul" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Books" Relationship="Diagram.BooksArticulBooks" FromRole="ArticulBooks" ToRole="Books" />
+          <NavigationProperty Name="BookExtras" Relationship="Diagram.BookExtrasArticulBooks" FromRole="ArticulBooks" ToRole="BookExtras" />
+        </EntityType>
+        <Association Name="FK_AuthorsBooks">
+          <End Type="Diagram.Authors" Role="Authors" Multiplicity="1" />
+          <End Type="Diagram.Books" Role="Books" Multiplicity="*" />
+        </Association>
+        <Association Name="FK_BookExtrasReaders">
+          <End Type="Diagram.Readers" Role="Readers" Multiplicity="1" />
+          <End Type="Diagram.BookExtras" Role="BookExtras" Multiplicity="*" />
+        </Association>
+        <Association Name="BooksArticulBooks">
+          <End Type="Diagram.Books" Role="Books" Multiplicity="1" />
+          <End Type="Diagram.ArticulBooks" Role="ArticulBooks" Multiplicity="*" />
+        </Association>
+        <Association Name="BookExtrasArticulBooks">
+          <End Type="Diagram.BookExtras" Role="BookExtras" Multiplicity="1" />
+          <End Type="Diagram.ArticulBooks" Role="ArticulBooks" Multiplicity="1" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DiagramStoreContainer" CdmEntityContainer="DiagramContainer">
+    <EntitySetMapping Name="Authors">
+      <EntityTypeMapping TypeName="IsTypeOf(Diagram.Authors)">
+        <MappingFragment StoreEntitySet="Authors">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="fio" ColumnName="fio" />
+          <ScalarProperty Name="year_of_life" ColumnName="year_of_life" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BookExtras">
+      <EntityTypeMapping TypeName="IsTypeOf(Diagram.BookExtras)">
+        <MappingFragment StoreEntitySet="BookExtras">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="date_out" ColumnName="date_out" />
+          <ScalarProperty Name="date_get" ColumnName="date_get" />
+          <ScalarProperty Name="cost" ColumnName="cost" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Books">
+      <EntityTypeMapping TypeName="IsTypeOf(Diagram.Books)">
+        <MappingFragment StoreEntitySet="Books">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="date_public" ColumnName="date_public" />
+          <ScalarProperty Name="cost" ColumnName="cost" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Readers">
+      <EntityTypeMapping TypeName="IsTypeOf(Diagram.Readers)">
+        <MappingFragment StoreEntitySet="Readers">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="fio" ColumnName="fio" />
+          <ScalarProperty Name="adress" ColumnName="adress" />
+          <ScalarProperty Name="phone" ColumnName="phone" />
+          <ScalarProperty Name="kolvo_books" ColumnName="kolvo_books" />
+          <ScalarProperty Name="date_reg" ColumnName="date_reg" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ArticulBooks">
+      <EntityTypeMapping TypeName="IsTypeOf(Diagram.ArticulBooks)">
+        <MappingFragment StoreEntitySet="ArticulBooks">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="articul" ColumnName="articul" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="FK_AuthorsBooks" TypeName="Diagram.FK_AuthorsBooks" StoreEntitySet="Books">
+      <EndProperty Name="Authors">
+        <ScalarProperty Name="id" ColumnName="Authors_id" />
+      </EndProperty>
+      <EndProperty Name="Books">
+        <ScalarProperty Name="id" ColumnName="id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="FK_BookExtrasReaders" TypeName="Diagram.FK_BookExtrasReaders" StoreEntitySet="BookExtras">
+      <EndProperty Name="Readers">
+        <ScalarProperty Name="id" ColumnName="Readers_id" />
+      </EndProperty>
+      <EndProperty Name="BookExtras">
+        <ScalarProperty Name="id" ColumnName="id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="BooksArticulBooks" TypeName="Diagram.BooksArticulBooks" StoreEntitySet="ArticulBooks">
+      <EndProperty Name="Books">
+        <ScalarProperty Name="id" ColumnName="Books_id" />
+      </EndProperty>
+      <EndProperty Name="ArticulBooks">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="BookExtrasArticulBooks" TypeName="Diagram.BookExtrasArticulBooks" StoreEntitySet="BookExtras">
+      <EndProperty Name="ArticulBooks">
+        <ScalarProperty Name="Id" ColumnName="ArticulBooks_Id" />
+      </EndProperty>
+      <EndProperty Name="BookExtras">
+        <ScalarProperty Name="id" ColumnName="id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
